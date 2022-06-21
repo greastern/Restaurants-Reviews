@@ -15,6 +15,19 @@ export default class RestaurantsController {
             filters.name = req.query.name
         }
 
-        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.get
+        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getRestaurants ({
+        filters,
+        page,
+        restaurantsPerPage,
+        })
+
+        let response = {
+            restaurants: restaurantsList,
+            page: page,
+            filters: filters,
+            entries_per_page: restaurantsPerPage,
+            total_restaurants: totalNumRestaurants,
+        }
+        res.json(response) // send a json response with all the above information in the response to whereever the url
     }
 }
